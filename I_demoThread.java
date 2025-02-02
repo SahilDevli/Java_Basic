@@ -1,36 +1,46 @@
+// Threading can be done by using either Thread class or Runable Interface.
 
-public class I_demoThread extends Thread {
+class create_thread_using_Thread extends Thread{
+    String str = "Thread class";
     @Override
     public void run(){
-    try{
-        System.out.println("Running method 1.1");
-        System.out.println("Running method 1.2");
-        Thread.sleep(2000); // Sleep for 2 seconds
-        System.out.println("Running method 1.3");
-    }
-    catch (InterruptedException e) {
-        System.out.println("Thread interrupted: " + e);
+        for(int i=0;i<50;i++){
+            System.out.println(str);
+        }
     }
 }
 
+class create_thread_using_runnable implements Runnable{
+    String str = "Runable interface";
+    @Override
+    public void run(){
+        for(int i=0; i<50;i++){
+            System.out.println(str);
+        }
+    }
+}
+
+public class I_demoThread{
     public static void main(String[] args) throws InterruptedException{
-        // Runnable task1 = () -> {
-        //     System.out.println("Run 1");
-        //     System.out.println("Run 2");
-        // };
 
-        Runnable th1 = new I_demoThread();
-        Thread t1 = new Thread(th1); // or Thread(task1); for above arrow methods of Runnable.
-        
-        // t1.run();
-        System.out.println(t1.getState()); // NEW
-        t1.start();
+        // if using thread class then this the method to start thread
+        create_thread_using_Thread th1 = new create_thread_using_Thread();
+        th1.start();
 
-        // System.out.println(t1.getState()); // RUNNABLE
-        // System.out.println("main thread is here..."); // main thread continues parallelly
+        // can create n number of thread by creating objects
+        // create_thread_using_Thread th3 = new create_thread_using_Thread();
+        // create_thread_using_Thread th4 = new create_thread_using_Thread();
 
-        // t1.join();
-        // System.out.println(t1.getState()); // TERMINATED
-        
+        // if using runnable interface then this the method to start thread
+        create_thread_using_runnable r = new create_thread_using_runnable();
+        Thread th2 = new Thread(r);
+        th2.run();
+
+
+        // -----------------        states of a thread      ---------------------
+
+        // 1. NEW   2. RUNABLE/RUNNING  3. BLOCKED/WAITING  4. TERMINATED 
+        Thread Tstate = new Thread();
+        System.out.print("\nThread state: " + Tstate.getState()); // NEW
     }
 }
